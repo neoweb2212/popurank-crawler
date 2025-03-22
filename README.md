@@ -308,3 +308,352 @@ Voici les détails techniques supplémentaires pour votre projet PopuRank-Crawl:
 Cette architecture vous permettra d'avoir un système de crawling robuste, performant et sécurisé, avec toutes les fonctionnalités clés de Screaming Frog tout en ajoutant des capacités modernes et une architecture SaaS.
 
 Souhaitez-vous que je détaille davantage certains aspects techniques particuliers du projet?
+
+Voici des options de templates de présentation pour PopuRank-Crawl ainsi que les fonctionnalités d'export et d'intégration avec Google Search Console :
+
+
+
+# Templates et Intégrations pour PopuRank-Crawl
+
+## 1. Templates de Présentation Disponibles
+
+### Templates de Dashboard
+
+#### Templates Open Source
+1. **Tabler UI**
+   - Interface admin moderne et responsive
+   - Compatible Bootstrap
+   - URL: https://tabler.io/
+   - License: MIT
+
+2. **AdminLTE**
+   - Dashboard complet avec nombreux composants
+   - Basé sur Bootstrap 4/5
+   - URL: https://adminlte.io/
+   - License: MIT
+
+3. **Volt Dashboard**
+   - UI moderne avec dark mode
+   - Composants Bootstrap 5
+   - URL: https://github.com/themesberg/volt-bootstrap-5-dashboard
+   - License: MIT (version gratuite)
+
+4. **Chameleon Admin**
+   - Design adaptable et clean
+   - URL: https://github.com/puikinsh/ChameleonAdmin
+   - License: MIT
+
+5. **Keen Dashboard**
+   - Hautement personnalisable
+   - URL: https://keenthemes.com/products/keen-free
+   - License: MIT
+
+### Templates React
+
+1. **React Admin**
+   - Framework complet pour interfaces d'administration
+   - URL: https://marmelab.com/react-admin/
+   - License: MIT
+
+2. **CoreUI React Admin**
+   - Composants React prêts à l'emploi
+   - URL: https://github.com/coreui/coreui-free-react-admin-template
+   - License: MIT
+
+3. **Shards Dashboard React**
+   - Interface moderne et légère
+   - URL: https://github.com/DesignRevision/shards-dashboard-react
+   - License: MIT
+
+### Templates Vue/Nuxt
+
+1. **Vue Black Dashboard**
+   - Dashboard moderne avec thème sombre
+   - URL: https://github.com/creativetimofficial/vue-black-dashboard
+   - License: MIT
+
+2. **Vuestic Admin**
+   - UI Kit Vue.js complet
+   - URL: https://github.com/epicmaxco/vuestic-admin
+   - License: MIT
+
+### Templates Spécifiques SEO/Analytics
+
+1. **SEO Dashboard Kit**
+   - Composants spécifiques pour analyse SEO
+   - URL: https://www.creative-tim.com/product/black-dashboard
+   - License: MIT (version gratuite)
+
+2. **Analytics Dashboard UI Kit**
+   - Visualisations adaptées aux données analytiques
+   - URL: https://www.figma.com/community/file/829208715891381735
+   - License: Gratuit pour Figma
+
+## 2. Export de Données Local
+
+### Formats d'Export
+
+1. **Export CSV**
+   - Implémentation avec `pandas` et `csv`
+   - Options de configuration:
+     - Séparateur personnalisable (virgule, point-virgule, tabulation)
+     - Encodage configurable (UTF-8, ISO-8859-1, etc.)
+     - Options de formatage des données
+
+2. **Export Excel (XLSX)**
+   - Implémentation avec `openpyxl` ou `xlsxwriter`
+   - Fonctionnalités:
+     - Feuilles multiples par catégorie de données
+     - Formatage conditionnel automatique
+     - Graphiques intégrés
+     - Tableaux pivots préconfigurés
+
+3. **Export PDF**
+   - Implémentation avec `reportlab` ou `weasyprint`
+   - Rapports professionnels avec mise en page et branding
+
+4. **JSON et JSON-LD**
+   - Export de données structurées
+   - Compatibilité avec d'autres outils d'analyse
+
+### Architecture d'Export
+
+```python
+class ExportManager:
+    def __init__(self, data_provider, config):
+        self.data_provider = data_provider
+        self.config = config
+        self.exporters = {
+            'csv': CSVExporter(),
+            'excel': ExcelExporter(),
+            'pdf': PDFExporter(),
+            'json': JSONExporter()
+        }
+    
+    def export(self, format_type, filters, output_path=None):
+        data = self.data_provider.get_data(filters)
+        exporter = self.exporters.get(format_type)
+        if not exporter:
+            raise ValueError(f"Format non supporté: {format_type}")
+        return exporter.export(data, self.config, output_path)
+```
+
+### Modèles de Rapports Préconfigurés
+
+1. **Rapport d'Audit Technique**
+   - Problèmes techniques par catégorie
+   - Scoring et recommandations
+
+2. **Rapport d'Analyse de Liens**
+   - Graphe de liens internes
+   - Backlinks et ancres
+
+3. **Rapport SEO On-Page**
+   - Analyse des titres et méta-descriptions
+   - Structure de contenu et mots-clés
+
+4. **Rapport de Performance**
+   - Temps de chargement
+   - Taille des pages et ressources
+
+5. **Rapport Comparatif**
+   - Évolution entre deux crawls
+   - Changements dans le temps
+
+## 3. Intégration Google Search Console
+
+### Architecture d'Intégration
+
+```python
+from googleapiclient.discovery import build
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+
+class GSCConnector:
+    SCOPES = ['https://www.googleapis.com/auth/webmasters.readonly']
+    
+    def __init__(self, credentials_path):
+        self.credentials_path = credentials_path
+        self.credentials = None
+        self.service = None
+    
+    def authenticate(self, token_path='token.json'):
+        # Implémentation de l'authentification OAuth2
+        # Stockage sécurisé des tokens
+        pass
+    
+    def get_sites(self):
+        # Récupération des sites vérifiés
+        pass
+    
+    def get_query_data(self, site_url, start_date, end_date, dimensions=None, 
+                      row_limit=1000, start_row=0):
+        # Récupération des données de requêtes
+        pass
+    
+    def get_page_data(self, site_url, start_date, end_date, dimensions=None,
+                     row_limit=1000, start_row=0):
+        # Récupération des données de pages
+        pass
+    
+    def get_sitemaps(self, site_url):
+        # Récupération des sitemaps
+        pass
+```
+
+### Fonctionnalités d'Intégration GSC
+
+1. **Authentification Sécurisée**
+   - OAuth2 avec refresh tokens
+   - Gestion multi-comptes
+   - Niveau d'accès configurable
+
+2. **Import de Données**
+   - Requêtes de recherche
+   - Performance des pages
+   - Erreurs d'indexation
+   - Couverture (Index Coverage)
+
+3. **Synchronisation Bidirectionnelle**
+   - Envoi de nouvelles URLs à GSC
+   - Soumission de sitemaps
+   - Demandes d'indexation (via IndexNow API)
+
+4. **Comparaison et Enrichissement**
+   - Croisement des données GSC avec données de crawl
+   - Identification d'opportunités SEO
+   - Détection de problèmes invisibles dans le crawl
+
+5. **Tableaux de Bord Intégrés**
+   - Visualisation unifiée des données de crawl et GSC
+   - Tendances de trafic et visibilité
+   - Analyse de performance par segment
+
+### Implémentation Technique
+
+```python
+class GSCIntegration:
+    def __init__(self, gsc_connector, crawl_repository):
+        self.gsc = gsc_connector
+        self.crawl_repo = crawl_repository
+    
+    def enrich_crawl_data(self, project_id, crawl_id, gsc_site_url, 
+                          date_range=30):
+        """Enrichit les données de crawl avec les données GSC."""
+        crawl_data = self.crawl_repo.get_crawl_pages(crawl_id)
+        
+        # Calcul des dates pour GSC
+        end_date = datetime.now().strftime('%Y-%m-%d')
+        start_date = (datetime.now() - timedelta(days=date_range)).strftime('%Y-%m-%d')
+        
+        # Récupération des données GSC
+        gsc_data = self.gsc.get_page_data(
+            gsc_site_url, 
+            start_date, 
+            end_date,
+            dimensions=['page', 'device', 'query']
+        )
+        
+        # Fusion des données
+        enriched_data = self._merge_data(crawl_data, gsc_data)
+        
+        # Stockage des données enrichies
+        self.crawl_repo.save_enriched_data(crawl_id, enriched_data)
+        
+        return enriched_data
+    
+    def _merge_data(self, crawl_data, gsc_data):
+        # Logique de fusion des données
+        # Normalisation des URLs
+        # Attribution des métriques
+        pass
+```
+
+### Rapports Combinés Avancés
+
+1. **Rapport d'Opportunités SEO**
+   - Pages crawlées mais peu visibles dans GSC
+   - Requêtes à fort potentiel
+   - Suggestions de méta-descriptions
+
+2. **Rapport de Problèmes Critiques**
+   - Pages avec erreurs de crawl et impact sur le trafic
+   - Redirection affectant les performances
+   - Pertes de trafic récentes
+
+3. **Rapport de Performance Technique**
+   - Corrélation entre vitesse de page et CTR/position
+   - Impact du Core Web Vitals
+   - Optimisations prioritaires
+
+
+Voici les éléments clés concernant les templates de présentation, les exports et l'intégration avec Google Search Console pour PopuRank-Crawl :
+
+## Templates de Présentation
+
+Pour l'interface utilisateur, plusieurs options gratuites de qualité sont disponibles :
+
+1. **Pour une UI moderne et légère** :
+   - Tabler UI (MIT License) - design épuré parfait pour les dashboards d'analyse
+   - Volt Dashboard - avec un excellent support pour les graphiques et visualisations de données
+
+2. **Pour une UI complète avec nombreux composants** :
+   - AdminLTE - très populaire et stable, nombreux exemples disponibles
+   - CoreUI React Admin - si vous préférez une base React
+
+3. **Spécifiques pour SEO/Analytics** :
+   - SEO Dashboard Kit - composants optimisés pour l'affichage de données SEO
+   - Analytics Dashboard UI Kit - parfait pour visualiser les métriques de crawl
+
+Tous ces templates sont facilement intégrables à votre stack Python via Flask ou FastAPI pour servir l'interface.
+
+## Export de Données Local
+
+Pour l'export vers Excel et CSV, j'ai prévu une architecture flexible :
+
+1. **Options d'export Excel complètes** :
+   - Utilisation d'openpyxl ou xlsxwriter pour générer des fichiers XLSX riches
+   - Multiples feuilles organisées par catégorie (liens, SEO, performances, etc.)
+   - Formatage conditionnel automatique (rouge pour erreurs, vert pour bon)
+   - Graphiques et tableaux pivots préconfigurés
+   - Formules pour calculs automatiques
+
+2. **Export CSV optimisé** :
+   - Configuration de séparateur (virgule ou point-virgule selon locale)
+   - Encodage personnalisable (UTF-8 ou autres)
+   - Organisation par thématique
+
+3. **Rapports préconfigurés** pour différents besoins :
+   - Audit technique
+   - Analyse de liens
+   - SEO on-page
+   - Performance
+   - Comparatifs entre crawls
+
+## Intégration Google Search Console
+
+L'intégration avec GSC sera implémentée avec ces fonctionnalités :
+
+1. **Authentification sécurisée** :
+   - OAuth2 avec gestion des refresh tokens
+   - Support multi-comptes et multi-sites
+
+2. **Récupération bidirectionnelle des données** :
+   - Import des requêtes de recherche
+   - Récupération des données de performance par page
+   - Soumission de nouvelles URLs découvertes
+   - Demandes d'indexation programmables
+
+3. **Analyses croisées puissantes** :
+   - Croisement des données de crawl avec impressions/clics GSC
+   - Identification des pages crawlées mais peu visibles dans GSC
+   - Détection des problèmes d'indexation
+
+4. **Tableaux de bord unifiés** qui combinent :
+   - Données techniques du crawl
+   - Métriques de performance GSC
+   - Évolution temporelle
+
+Cette approche vous permettra non seulement d'exporter facilement vos données pour analyses locales, mais aussi d'avoir un système complet qui enrichit les données de crawl avec les données réelles de performance dans Google.
+
+Souhaitez-vous que je détaille l'implémentation technique d'une de ces fonctionnalités en particulier ?
